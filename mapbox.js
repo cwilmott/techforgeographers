@@ -34,18 +34,17 @@ map.on('click', 'points-layer', (e) => { });
 
 geolocate.trigger();
 
-map.addSource('points', {
+map.on('load', function() {
+  map.addSource('points', {
         type: 'geojson',
         data: 'https://raw.githubusercontent.com/cwilmott/locativemedia/main/data/campus-icons.geojson'
       });
-
     map.addLayer({
   id: 'points-layer',
   type: 'symbol',
   source: 'points',
   layout: {
-    'icon-image': ['get', 'icon'], // more icons here: https://labs.mapbox.com/maki-icons/editor/
+    'icon-image': 'shoe', // more icons here: https://labs.mapbox.com/maki-icons/editor/
     'icon-allow-overlap': true
   },
-  paint: { }
 });
