@@ -1,69 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Secret Page that Noone will ever see</title>
-<style>
-body {
-  background-color: black;
-}
-
-h1 {
-  color: white;
-  text-align: center;
-}
-
-p {
-  font-family: arial;
-  font-size: 20px;
-color: white;
-}
-.blink {
-        width: 220px;
-        height: 50px;
-        padding: 10px;
-        text-align: right;
-        line-height: 50px;
-      }
-      span {
-        font-size: 26px;
-        font-family: arial;
-        color: red;
-        animation: blink 2s linear infinite;
-      }
-      @keyframes blink {
-        0% {
-          opacity: 0;
-        }
-        50% {
-          opacity: .5;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-</style>
+<title>My Map</title>
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+<style> body { margin: 0; padding: 0;}
+#map { position: absolute; top: 0; bottom: 0; width: 100%}</style>
 </head>
 <body>
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
-<p id="changething">THIS WILL CHANGE</p>
+<div id="map"></div>
+<script>
 
-<button type="button" onclick="document.getElementById('changething').style.color='red'">Doom Awaits!</button>
-<p style="color:#D46A6A">this is the best para </p>
-<div class="blink">
-      <span>feast your eyes</span>
-    </div>
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2xhbmN5d2lsbW90dCIsImEiOiJjandmY3Ryc2MxaThkNDBtZ2dmcG9zOWJzIn0.wLqA-pIsMZcIl5uUgb49-Q'
 
-<button onclick="document.getElementById('myImage').src='https://images.unsplash.com/photo-1529778873920-4da4926a72c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHw%3D&w=1000&q=80'">Change Squirrel</button>
+var map = new mapboxgl.Map({
+  container: 'map', // container id
+  style: 'mapbox://styles/clancywilmott/ckz4r02iq002015o35b3kzdlt', // stylesheet location
+  center: [-122.25, 37.87], // starting position
+  zoom: 12 // starting zoom
+});
 
-
-
-<!-- Secret Comment to Future Clancy - Get Rid of Squirrel. Possible Fascist.-->
-
-
-
-
-<img id='myImage' src="https://media.npr.org/assets/img/2017/04/25/istock-115796521_wide-2f8afeb04be5bf8290f13dd1a5a9e107f63ee2fd.jpg?s=1400" alt="Italian Trulli"style="width:500px;height:600px;"></img>
-
+map.on('load', function() {
+  map.addSource('points', {
+        type: 'geojson',
+        data: 'https://raw.githubusercontent.com/cwilmott/locativemedia/main/data/campus-icons.geojson'
+      });
+    map.addLayer({
+  id: 'points-layer',
+  type: 'symbol',
+  source: 'points',
+  layout: {
+    'icon-image': 'shoe', // more icons here: https://labs.mapbox.com/maki-icons/editor/
+    'icon-allow-overlap': true
+  },
+});
+});</script>
 </body>
 </html>
